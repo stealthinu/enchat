@@ -192,7 +192,7 @@ window.onload = function() {
                 this.login_name.y = this.y + 32;
                 this.message.x = this.x - 30;
                 this.message.y = this.y - 16;
-                socket.emit("position", this.x + "," + this.y);
+                socket.emit("position", { x : this.x, y : this.y });
 
                 if (!(game.frame % 3)) {
                     this.walk++;
@@ -272,10 +272,9 @@ window.onload = function() {
             message_group.addChild(other_player.message);
 
             // サーバからこのユーザの移動が来たら移動させる
-            socket.on("position:" + login_name, function(text) {
-                var nums = text.split(",");
-                other_player.x = parseInt(nums[0]);
-                other_player.y = parseInt(nums[1]);
+            socket.on("position:" + login_name, function(pos) {
+                other_player.x = pos.x;
+                other_player.y = pos.y;
                 other_player.message.x = other_player.x - 30;
                 other_player.message.y = other_player.y - 16;
                 other_player.login_name.x = other_player.x - 35;

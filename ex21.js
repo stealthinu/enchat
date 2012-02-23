@@ -44,14 +44,12 @@ io.sockets.on("connection", function(socket) {
   });
   
   // 移動処理
-  socket.on("position", function(text) {
+  socket.on("position", function(pos) {
     // console.log("position:" + player.login_name + " " + text);
-    var nums = text.split(",");
-    player.x = parseInt(nums[0]);
-    player.y = parseInt(nums[1]);
-    player.direction = parseInt(nums[2]);
-    socket.broadcast.emit("position:" + player.login_name,
-                          player.x + "," + player.y + "," + player.direction);
+    player.x = pos.x;
+    player.y = pos.y;
+    player.direction = pos.direction;
+    socket.broadcast.emit("position:" + player.login_name, pos);
   });
 
   // こちらがメッセージを受けた時の処理
